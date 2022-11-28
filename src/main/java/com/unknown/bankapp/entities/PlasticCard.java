@@ -22,4 +22,8 @@ public abstract class PlasticCard {
 
     private Currency currency;
 
+    public PlasticCard(String number, Long pin) {
+        this.number = number;
+        this.pin = pin;
+    }
 }

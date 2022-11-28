@@ -24,4 +24,8 @@ public class DebitCard extends PlasticCard{
         this.isOverdraftAvailable = isOverdraftAvailable;
         this.overdraftLimit = overdraftLimit;
     }
+
+    public DebitCard(String number, Long pin) {
+        super(number, pin);
+    }
 }

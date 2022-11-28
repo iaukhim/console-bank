@@ -1,6 +1,8 @@
 package com.unknown.bankapp.services;
 
-public interface AuthServiceInterface {
+public interface AuthService {
 
      boolean tryAuth(String cardNumber, String pinCode);
+
+
 }
