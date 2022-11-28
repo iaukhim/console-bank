@@ -2,7 +2,7 @@ package com.unknown.bankapp.util;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.unknown.bankapp.services.AuthServiceInterface;
+import com.unknown.bankapp.services.AuthService;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class UtilClass{
 
     @Autowired
-    private AuthServiceInterface authService;
+    private AuthService authService;
 
     public   boolean checkUserInput(String input){
         try {

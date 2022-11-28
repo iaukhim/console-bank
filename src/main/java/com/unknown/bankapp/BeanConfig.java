@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import com.unknown.bankapp.runner.RunnerClass;
-import com.unknown.bankapp.services.AuthServiceInterface;
+import com.unknown.bankapp.services.AuthService;
 
 
 @Configuration
@@ -14,7 +14,7 @@ import com.unknown.bankapp.services.AuthServiceInterface;
 public class BeanConfig {
 
     @Autowired
-    AuthServiceInterface authService;
+    AuthService authService;
 
     @Bean
     public RunnerClass runnerClass(){
