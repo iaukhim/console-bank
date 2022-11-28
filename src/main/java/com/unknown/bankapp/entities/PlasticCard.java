@@ -3,6 +3,7 @@ package com.unknown.bankapp.entities;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Currency;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +22,10 @@ public abstract class PlasticCard {
     private Long balance;
 
     private Currency currency;
+
+    private boolean isBlocked;
+
+    private LocalDateTime dateOfBlock;
 
     public PlasticCard(String number, Long pin) {
         this.number = number;

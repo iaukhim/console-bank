@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Currency;
 
-public class RunnerClass{
+public class RunnerClass {
 
     @Autowired
     private UtilClass utilClass;
@@ -27,37 +27,45 @@ public class RunnerClass{
     }
 
     public void run() throws IOException {
+
         br = new BufferedReader(new InputStreamReader(System.in));
         Boolean isAuth = false;
-        while (true){
-            if(!isAuth){
+        while (true) {
+            if (!isAuth) {
                 System.out.println("Please, enter card number");
                 String cardNumber = br.readLine();
                 System.out.println("Please, enter pin-code");
                 String pinCode = br.readLine();
-                if (!utilClass.checkCardNumberFormat(cardNumber) || !utilClass.checkPinCodeFormat(pinCode)){
+                if (!utilClass.checkCardNumberFormat(cardNumber) || !utilClass.checkPinCodeFormat(pinCode)) {
                     System.out.println("Wrong card number or pin-code format");
                     continue;
                 }
-                isAuth = utilClass.authentication(cardNumber, pinCode);
-                if (isAuth){
+                try {
+                    isAuth = utilClass.authentication(cardNumber, pinCode);
+                } catch (CausedByUser e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
+                if (isAuth) {
                     currentCard = new DebitCard(cardNumber, Long.parseLong(pinCode));
                 }
                 continue;
             }
             showMenu();
             String userInput = br.readLine();
-            if (userInput.equals("0")){
+            if (userInput.equals("0")) {
                 break;
             }
-            if(!utilClass.checkUserInput(userInput)){
+            if (!utilClass.checkUserInput(userInput)) {
                 System.out.println("You should pick one of menu items listed above. Please, use correct digit to continue \n \n");
                 continue;
             }
             callService(userInput);
         }
+
     }
-    private void showMenu(){
+
+    private void showMenu() {
         System.out.println("***********************************\n Hello, here's what you can do");
         System.out.println("1. Check balance");
         System.out.println("2. Withdraw money");

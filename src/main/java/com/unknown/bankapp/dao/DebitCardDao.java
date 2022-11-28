@@ -10,4 +10,6 @@ public interface DebitCardDao {
 
     void changeBalance(DebitCard debitCard, Long newBalance);
 
+    void setBlockStatus(String cardNumber, Boolean status);
+
 }
