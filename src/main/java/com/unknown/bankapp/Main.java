@@ -1,5 +1,6 @@
 package com.unknown.bankapp;
 
+import com.unknown.bankapp.services.AtmBalanceService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.unknown.bankapp.runner.RunnerClass;
@@ -14,6 +15,5 @@ public class Main {
         RunnerClass runner = appContext.getBean(RunnerClass.class);
         runner.run();
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.unknown.bankapp.runner;
 
 import com.unknown.bankapp.entities.DebitCard;
+import com.unknown.bankapp.exceptions.internal.user.CausedByUser;
 import com.unknown.bankapp.services.DebitCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unknown.bankapp.util.UtilClass;
@@ -19,13 +20,14 @@ public class RunnerClass{
     private DebitCardService debitCardService;
     private DebitCard currentCard;
 
+    private BufferedReader br;
+
     public RunnerClass(UtilClass utilClass) {
         this.utilClass = utilClass;
     }
 
     public void run() throws IOException {
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
+        br = new BufferedReader(new InputStreamReader(System.in));
         Boolean isAuth = false;
         while (true){
             if(!isAuth){
@@ -65,12 +67,28 @@ public class RunnerClass{
     }
 
     private void callService(String userInput) {
-        switch (userInput) {
-            case ("1"):
-                Long balance = debitCardService.showBalance(currentCard.getNumber());
-                Currency currency = debitCardService.loadCurrency(currentCard.getNumber());
-                System.out.println("Your current balance is " + balance + " " + currency.getCurrencyCode() + "\n\n");
-                break;
+        try {
+            switch (userInput) {
+                case ("1"):
+                    Long balance = debitCardService.showBalance(currentCard.getNumber());
+                    Currency currency = debitCardService.loadCurrency(currentCard.getNumber());
+                    System.out.println("Your current balance is " + balance + " " + currency.getCurrencyCode() + "\n\n");
+                    break;
+                case ("2"):
+                    System.out.println("Enter amount of money you want to withdraw");
+                    Long amountToWithdraw = Long.parseLong(br.readLine());
+                    debitCardService.withdrawMoney(currentCard, amountToWithdraw);
+                    System.out.println("Please, take your money \n \n");
+                    break;
+                case ("3"):
+                    System.out.println("Enter amount of money you want to fill up");
+                    Long amountToFillUp = Long.parseLong(br.readLine());
+                    debitCardService.fillUpTheCard(currentCard, amountToFillUp);
+            }
+        } catch (CausedByUser e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

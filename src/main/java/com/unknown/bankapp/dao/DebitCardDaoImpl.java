@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +25,29 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
     private final String pathToFile = "src/main/resources/db/DebitCards.csv";
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
+
+    @Override
+    public void changeBalance(DebitCard debitCard, Long newBalance) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(pathToFile), StandardCharsets.UTF_8);
+            String cardStringFormat = lines.get(debitCard.getId().intValue() - 1);
+            List<String> parsedCardInfo = new ArrayList<>(Arrays.stream(cardStringFormat.split(" ")).toList());
+            parsedCardInfo.set(4, newBalance.toString());
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String element: parsedCardInfo) {
+                stringBuffer.append(element);
+                stringBuffer.append(" ");
+            }
+            String correctedCardInfo = stringBuffer.deleteCharAt(stringBuffer.length() - 1).toString();
+            lines.set(debitCard.getId().intValue() - 1, correctedCardInfo);
+            Files.write(Paths.get(pathToFile), lines, StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+
+        } catch (IOException e) {
+            logger.log(Level.FATAL, e.getMessage());
+            throw new DaoLayerException(e);
+        }
+
+    }
 
     public List<DebitCard> loadAll() {
         List<DebitCard> cards = new ArrayList<>();

@@ -7,4 +7,7 @@ public interface DebitCardDao {
     List<DebitCard> loadAll();
 
     DebitCard loadByCardNumber(String cardNumber);
+
+    void changeBalance(DebitCard debitCard, Long newBalance);
+
 }
