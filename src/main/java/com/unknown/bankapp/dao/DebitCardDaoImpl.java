@@ -34,14 +34,9 @@ public class DebitCardDaoImpl implements DebitCardDao {
             String cardStringFormat = lines.get(debitCard.getId().intValue() - 1);
             List<String> parsedCardInfo = new ArrayList<>(Arrays.stream(cardStringFormat.split(" ")).toList());
             parsedCardInfo.set(4, newBalance.toString());
-            StringBuffer stringBuffer = new StringBuffer();
-            for (String element: parsedCardInfo) {
-                stringBuffer.append(element);
-                stringBuffer.append(" ");
-            }
-            String correctedCardInfo = stringBuffer.deleteCharAt(stringBuffer.length() - 1).toString();
+            String correctedCardInfo = String.join("\s", parsedCardInfo);
             lines.set(debitCard.getId().intValue() - 1, correctedCardInfo);
-            Files.write(Paths.get(pathToFile), lines, StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+            Files.writeString(Paths.get(pathToFile), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
             throw new DaoLayerException(e);
@@ -59,14 +54,10 @@ public class DebitCardDaoImpl implements DebitCardDao {
             List<String> parsedCardInfo = new ArrayList<>(Arrays.stream(cardStringFormat.split(" ")).toList());
             parsedCardInfo.set(8, status.toString());
             parsedCardInfo.set(9, debitCard.getDateOfBlock().toString());
-            StringBuffer stringBuffer = new StringBuffer();
-            for (String element: parsedCardInfo) {
-                stringBuffer.append(element);
-                stringBuffer.append(" ");
-            }
-            String correctedCardInfo = stringBuffer.deleteCharAt(stringBuffer.length() - 1).toString();
+
+            String correctedCardInfo = String.join("\s", parsedCardInfo);
             lines.set(debitCard.getId().intValue() - 1, correctedCardInfo);
-            Files.write(Paths.get(pathToFile), lines, StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+            Files.writeString(Paths.get(pathToFile), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
             throw new DaoLayerException(e);
@@ -80,16 +71,13 @@ public class DebitCardDaoImpl implements DebitCardDao {
         ) {
             while (bufferedReader.ready()) {
                 List<String> cardInfo = Arrays.stream(bufferedReader.readLine().split("\s")).toList();
-                if(cardInfo.size() > 3){
-                    cards.add(constructCardFromInfo(cardInfo));
-                }
+                cards.add(constructCardFromInfo(cardInfo));
             }
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
             throw new DaoLayerException(e);
         }
         return cards;
-
     }
 
     @Override
@@ -123,10 +111,9 @@ public class DebitCardDaoImpl implements DebitCardDao {
         Long overDraftLimit = Long.parseLong(cardInfo.get(7));
         Boolean isBlocked = Boolean.valueOf(cardInfo.get(8));
         LocalDateTime blockDate = null;
-        if(isBlocked){
+        if (isBlocked) {
             blockDate = LocalDateTime.parse(cardInfo.get(9));
         }
-
         return new DebitCard(id, cardNumber, pin, expDate, balance, currency, isOverdraftAvailable, overDraftLimit, isBlocked, blockDate);
     }
 }

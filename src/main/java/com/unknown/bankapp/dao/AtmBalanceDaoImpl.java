@@ -7,20 +7,17 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 
 @Repository
-public class AtmBalanceImpl implements AtmBalanceDao{
+public class AtmBalanceDaoImpl implements AtmBalanceDao {
 
     private final String pathToFile = "src/main/resources/db/atmBalance.csv";
 
@@ -35,7 +32,7 @@ public class AtmBalanceImpl implements AtmBalanceDao{
                 List<String> atmBalance = new ArrayList(Arrays.stream(bufferedReader.readLine().split(" ")).toList());
                 atmBalance.set(0, newBalance.toString());
                 StringBuffer stringBuffer = new StringBuffer();
-                atmBalance.stream().forEach( n -> {
+                atmBalance.stream().forEach(n -> {
                     stringBuffer.append(n);
                     stringBuffer.append(" ");
                 });
@@ -49,7 +46,7 @@ public class AtmBalanceImpl implements AtmBalanceDao{
 
     @Override
     public Currency loadCurrency() {
-        String currencyCode = "";
+        String currencyCode = null;
         try (FileReader fileReader = new FileReader(pathToFile);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
