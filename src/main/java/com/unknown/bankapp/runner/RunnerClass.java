@@ -73,7 +73,7 @@ public class RunnerClass {
         System.out.println("***********************************\n Hello, here's what you can do");
         System.out.println("1. Check balance");
         System.out.println("2. Withdraw money");
-        System.out.println("3. Fill up the card");
+        System.out.println("3. Top up account");
         System.out.println("0. Exit");
         System.out.println("***********************************\n");
     }
@@ -97,14 +97,14 @@ public class RunnerClass {
                 System.out.println("Please, take your money \n \n");
                 break;
             case ("3"):
-                System.out.println("Enter amount of money you want to fill up");
+                System.out.println("Enter amount of money you want to deposit");
                 String userInputCase3 = br.readLine();
                 if (!utilClass.checkUserAmountOfMoneyInput(userInputCase3)) {
                     System.out.println("Incorrect input");
                     break;
                 }
                 Double amountToFillUp = Double.parseDouble(userInputCase3);
-                debitCardService.fillUpTheCard(currentCard, amountToFillUp);
+                debitCardService.topUpCard(currentCard, amountToFillUp);
         }
     }
 }

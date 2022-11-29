@@ -2,7 +2,7 @@ package com.unknown.bankapp.services;
 
 import com.unknown.bankapp.dao.DebitCardDao;
 import com.unknown.bankapp.entities.DebitCard;
-import com.unknown.bankapp.exceptions.user.FillingUpLimitExceededError;
+import com.unknown.bankapp.exceptions.user.DepositLimitExceededError;
 import com.unknown.bankapp.exceptions.user.NotEnoughAtmBalance;
 import com.unknown.bankapp.exceptions.user.NotEnoughMoneyException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,9 @@ public class DebitCardServiceImpl implements DebitCardService{
     }
 
     @Override
-    public void fillUpTheCard(DebitCard debitCard, Double amount) throws FillingUpLimitExceededError{
+    public void topUpCard(DebitCard debitCard, Double amount) throws DepositLimitExceededError {
         if (amount > FILING_UP_LIMIT){
-            throw new FillingUpLimitExceededError();
+            throw new DepositLimitExceededError();
         }
         DebitCard fullInfoCard = debitCardDao.loadByCardNumber(debitCard.getNumber());
         debitCardDao.changeBalance(fullInfoCard, fullInfoCard.getBalance() + amount);

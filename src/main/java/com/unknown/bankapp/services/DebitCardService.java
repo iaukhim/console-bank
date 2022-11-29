@@ -12,5 +12,5 @@ public interface DebitCardService {
 
     void withdrawMoney(DebitCard debitCard, Double amount);
 
-    void fillUpTheCard(DebitCard debitCard, Double amount);
+    void topUpCard(DebitCard debitCard, Double amount);
 }
