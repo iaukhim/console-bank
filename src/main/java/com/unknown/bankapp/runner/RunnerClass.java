@@ -13,20 +13,15 @@ import java.io.InputStreamReader;
 import java.util.Currency;
 
 public class RunnerClass {
-
     @Autowired
     private UtilClass utilClass;
-
     @Autowired
     private DebitCardService debitCardService;
     private DebitCard currentCard;
-
     private BufferedReader br;
-
     public RunnerClass(UtilClass utilClass) {
         this.utilClass = utilClass;
     }
-
     public void run() {
         br = new BufferedReader(new InputStreamReader(System.in));
         Boolean isAuth = false;
@@ -64,8 +59,13 @@ public class RunnerClass {
                 System.out.println("Check your input device");
             } catch (InternalException exc) {
                 System.out.println("Sorry, atm not working properly right now. Please, try again later.\n " +
-                        "We would be grateful, if you will inform owner about this message\n");
+                                    "We would be grateful, if you will inform owner about this message\n");
             }
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
