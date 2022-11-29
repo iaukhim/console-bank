@@ -1,9 +1,10 @@
 package com.unknown.bankapp.exceptions.user;
 
 public class NotEnoughAtmBalance extends CausedByUser{
+
     private Long atmBalance;
 
-    public NotEnoughAtmBalance(Long atmBalance) {
+    public NotEnoughAtmBalance(Double atmBalance) {
         super("ATM does`nt have enough money. ATM balance is " + atmBalance);
     }
 

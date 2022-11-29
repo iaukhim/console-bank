@@ -24,7 +24,7 @@ public class AtmBalanceDaoImpl implements AtmBalanceDao {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Override
-    public void changeBalance(Long newBalance) {
+    public void changeBalance(Double newBalance) {
         try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
@@ -62,14 +62,14 @@ public class AtmBalanceDaoImpl implements AtmBalanceDao {
     }
 
     @Override
-    public Long loadBalance() {
-        Long atmBalance = 0L;
+    public Double loadBalance() {
+        Double atmBalance = 0D;
         try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {
                 String stringBalance = Arrays.stream(bufferedReader.readLine().split(" ")).toList().get(0);
-                atmBalance = Long.parseLong(stringBalance);
+                atmBalance = Double.parseDouble(stringBalance);
             }
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());

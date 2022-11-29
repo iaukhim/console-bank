@@ -17,7 +17,7 @@ public abstract class PlasticCard {
 
     private LocalDate expDate;
 
-    private Long balance;
+    private Double balance;
 
     private Currency currency;
 

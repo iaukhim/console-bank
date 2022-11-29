@@ -78,10 +78,10 @@ public class RunnerClass {
         System.out.println("***********************************\n");
     }
 
-    private void callService(String userInput) throws IOException {
+    private void callService(String userInput) throws IOException, NumberFormatException {
         switch (userInput) {
             case ("1"):
-                Long balance = debitCardService.showBalance(currentCard.getNumber());
+                Double balance = debitCardService.showBalance(currentCard.getNumber());
                 Currency currency = debitCardService.loadCurrency(currentCard.getNumber());
                 System.out.println("Your current balance is " + balance + " " + currency.getCurrencyCode() + "\n\n");
                 break;
@@ -92,7 +92,7 @@ public class RunnerClass {
                     System.out.println("Incorrect input");
                     break;
                 }
-                Long amountToWithdraw = Long.parseLong(userInputCase2);
+                Double amountToWithdraw = Double.parseDouble(userInputCase2);
                 debitCardService.withdrawMoney(currentCard, amountToWithdraw);
                 System.out.println("Please, take your money \n \n");
                 break;
@@ -103,7 +103,7 @@ public class RunnerClass {
                     System.out.println("Incorrect input");
                     break;
                 }
-                Long amountToFillUp = Long.parseLong(userInputCase3);
+                Double amountToFillUp = Double.parseDouble(userInputCase3);
                 debitCardService.fillUpTheCard(currentCard, amountToFillUp);
         }
     }

@@ -6,11 +6,11 @@ import java.util.Currency;
 
 public interface DebitCardService {
 
-    Long showBalance(String cardNumber);
+    Double showBalance(String cardNumber);
 
     Currency loadCurrency(String cardNumber);
 
-    void withdrawMoney(DebitCard debitCard, Long amount);
+    void withdrawMoney(DebitCard debitCard, Double amount);
 
-    void fillUpTheCard(DebitCard debitCard, Long amount);
+    void fillUpTheCard(DebitCard debitCard, Double amount);
 }

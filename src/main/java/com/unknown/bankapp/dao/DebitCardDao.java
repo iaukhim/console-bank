@@ -8,7 +8,7 @@ public interface DebitCardDao {
 
     DebitCard loadByCardNumber(String cardNumber);
 
-    void changeBalance(DebitCard debitCard, Long newBalance);
+    void changeBalance(DebitCard debitCard, Double newBalance);
 
     void setBlockStatus(String cardNumber, Boolean status);
 

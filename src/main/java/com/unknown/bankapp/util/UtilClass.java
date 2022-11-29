@@ -26,9 +26,9 @@ public class UtilClass{
     }
 
     public   boolean checkUserAmountOfMoneyInput(String input){
-        Long amountOfMoney;
+        Double amountOfMoney;
         try {
-            amountOfMoney = Long.parseLong(input);
+            amountOfMoney = Double.parseDouble(input);
         }
         catch (NumberFormatException e){
             return false;

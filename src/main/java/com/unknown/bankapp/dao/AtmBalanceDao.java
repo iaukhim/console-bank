@@ -4,9 +4,9 @@ import java.util.Currency;
 
 public interface AtmBalanceDao {
 
-    Long loadBalance();
+    Double loadBalance();
 
     Currency loadCurrency();
 
-    void changeBalance(Long newBalance);
+    void changeBalance(Double newBalance);
 }

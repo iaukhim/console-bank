@@ -22,13 +22,13 @@ public class DebitCardServiceImpl implements DebitCardService{
     private AtmBalanceService atmBalanceService;
 
     @Override
-    public Long showBalance(String cardNumber) {
+    public Double showBalance(String cardNumber) {
         DebitCard debitCard = debitCardDao.loadByCardNumber(cardNumber);
         return debitCard.getBalance();
     }
 
     @Override
-    public void fillUpTheCard(DebitCard debitCard, Long amount) throws FillingUpLimitExceededError{
+    public void fillUpTheCard(DebitCard debitCard, Double amount) throws FillingUpLimitExceededError{
         if (amount > FILING_UP_LIMIT){
             throw new FillingUpLimitExceededError();
         }
@@ -38,8 +38,8 @@ public class DebitCardServiceImpl implements DebitCardService{
     }
 
     @Override
-    public void withdrawMoney(DebitCard debitCard, Long amount) throws NotEnoughAtmBalance, NotEnoughMoneyException {
-        Long atmBalance = atmBalanceService.showBalance();
+    public void withdrawMoney(DebitCard debitCard, Double amount) throws NotEnoughAtmBalance, NotEnoughMoneyException {
+        Double atmBalance = atmBalanceService.showBalance();
         DebitCard fullInfoCard = debitCardDao.loadByCardNumber(debitCard.getNumber());
         if (amount > atmBalance){
             throw new NotEnoughAtmBalance(atmBalance);

@@ -2,9 +2,9 @@ package com.unknown.bankapp.exceptions.user;
 
 public class NotEnoughMoneyException extends CausedByUser {
 
-    private Long balance;
+    private Double balance;
 
-    public NotEnoughMoneyException(Long balance) {
+    public NotEnoughMoneyException(Double balance) {
         super("You don`t have enough money on your card. Your balance is " + balance);
     }
 

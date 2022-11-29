@@ -13,12 +13,12 @@ public class AtmBalanceServiceImpl implements AtmBalanceService {
     private AtmBalanceDao atmBalanceDao;
 
     @Override
-    public Long showBalance() {
+    public Double showBalance() {
         return atmBalanceDao.loadBalance();
     }
 
     @Override
-    public void changeBalance(Long newBalance) {
+    public void changeBalance(Double newBalance) {
         atmBalanceDao.changeBalance(newBalance);
     }
 

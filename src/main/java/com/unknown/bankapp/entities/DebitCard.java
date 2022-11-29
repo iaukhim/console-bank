@@ -15,7 +15,7 @@ public class DebitCard extends PlasticCard{
 
     private Long overdraftLimit;
 
-    public DebitCard(Long id, String number, Long pin, LocalDate expDate, Long balance, Currency currency, Boolean isOverdraftAvailable, Long overdraftLimit, boolean isBlocked, LocalDateTime dateOfBlock) {
+    public DebitCard(Long id, String number, Long pin, LocalDate expDate, Double balance, Currency currency, Boolean isOverdraftAvailable, Long overdraftLimit, boolean isBlocked, LocalDateTime dateOfBlock) {
         super(id, number, pin, expDate, balance, currency, isBlocked, dateOfBlock);
         this.isOverdraftAvailable = isOverdraftAvailable;
         this.overdraftLimit = overdraftLimit;

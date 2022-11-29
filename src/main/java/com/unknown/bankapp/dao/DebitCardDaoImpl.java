@@ -28,7 +28,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Override
-    public void changeBalance(DebitCard debitCard, Long newBalance) {
+    public void changeBalance(DebitCard debitCard, Double newBalance) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(PATH_TO_FILE), StandardCharsets.UTF_8);
             String cardStringFormat = lines.get(debitCard.getId().intValue() - 1);
@@ -105,7 +105,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
         Long pin = Long.parseLong(cardInfo.get(2));
         String[] spitedExpDate = cardInfo.get(3).split("\\D");
         LocalDate expDate = LocalDate.of(Integer.parseInt(spitedExpDate[0]), Integer.parseInt(spitedExpDate[1]), Integer.parseInt(spitedExpDate[2]));
-        Long balance = Long.parseLong(cardInfo.get(4));
+        Double balance = Double.parseDouble(cardInfo.get(4));
         Currency currency = Currency.getInstance(cardInfo.get(5));
         Boolean isOverdraftAvailable = Boolean.valueOf(cardInfo.get(6));
         Long overDraftLimit = Long.parseLong(cardInfo.get(7));
