@@ -12,9 +12,7 @@ import java.util.Currency;
 public abstract class PlasticCard {
 
     private Long id;
-
     private String number;
-
     private Long pin;
 
     private LocalDate expDate;

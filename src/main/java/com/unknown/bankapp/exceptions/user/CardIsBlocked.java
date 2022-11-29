@@ -1,4 +1,4 @@
-package com.unknown.bankapp.exceptions.internal.user;
+package com.unknown.bankapp.exceptions.user;
 
 import java.time.LocalDateTime;
 
@@ -7,7 +7,7 @@ public class CardIsBlocked extends CausedByUser{
     }
 
     public CardIsBlocked(LocalDateTime dateOfBlock) {
-        super("Your card was blocked " + dateOfBlock.toString() + ". It will automatically unblocked within 24 hours");
+        super("Your card was blocked " + dateOfBlock.toString() + ". It will be automatically unblocked within 24 hours.");
     }
 
     public CardIsBlocked(String message, Throwable cause) {

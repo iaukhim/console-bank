@@ -12,7 +12,7 @@ public class UtilClass{
     @Autowired
     private AuthService authService;
 
-    public   boolean checkUserInput(String input){
+    public   boolean checkUserMenuInput(String input){
         try {
             Long menuItem = Long.parseLong(input);
             if (menuItem <1 || menuItem>3){
@@ -25,7 +25,18 @@ public class UtilClass{
         return true;
     }
 
-    public   boolean authentication(String cardNumber, String pinCode){
+    public   boolean checkUserAmountOfMoneyInput(String input){
+        Long amountOfMoney;
+        try {
+            amountOfMoney = Long.parseLong(input);
+        }
+        catch (NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean authentication(String cardNumber, String pinCode){
         boolean authResult = authService.tryAuth(cardNumber, pinCode);
         if (!authResult){
             System.out.println("Auth error. Check card number or pin-code");
@@ -57,12 +68,7 @@ public class UtilClass{
             long count = Arrays.stream(cardNumber.trim().split("-")).map((n) -> {
                 String trimmedString = n.trim();
                 return Long.parseLong(trimmedString);
-            }).filter(n -> {
-                if (n < 0 || n > 9999) {
-                    return false;
-                }
-                return true;
-            }).count();
+            }).filter(n -> n >= 0 && n <= 9999).count();
             if(count !=4){
                 return false;
             }

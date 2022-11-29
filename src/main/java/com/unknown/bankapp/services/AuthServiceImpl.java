@@ -2,7 +2,7 @@ package com.unknown.bankapp.services;
 
 import com.unknown.bankapp.dao.DebitCardDao;
 import com.unknown.bankapp.entities.DebitCard;
-import com.unknown.bankapp.exceptions.internal.user.CardIsBlocked;
+import com.unknown.bankapp.exceptions.user.CardIsBlocked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private DebitCardDao debitCardDao;
 
     @Override
-    public boolean tryAuth(String cardNumber, String pinCode) {
+    public boolean tryAuth(String cardNumber, String pinCode) throws CardIsBlocked{
         DebitCard fullInfoCard = debitCardDao.loadByCardNumber(cardNumber);
         if(fullInfoCard.isBlocked()){
             if(ChronoUnit.MINUTES.between(fullInfoCard.getDateOfBlock(), LocalDateTime.now()) < 1440) {
@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
             }
         }
         List<DebitCard> allDebitCards = debitCardDao.loadAll();
-        Optional<DebitCard> first = allDebitCards.stream().filter(n -> n.getNumber().equals(cardNumber) && n.getPin().toString().equals(pinCode)).findFirst();
+        Optional<DebitCard> first = allDebitCards.stream().filter(n -> n.getNumber().equals(cardNumber) && n.getPin()== Long.parseLong(pinCode)).findFirst();
         if (first.isPresent()) {
             attempts = 0;
             return true;

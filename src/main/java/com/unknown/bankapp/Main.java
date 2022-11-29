@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         ApplicationContext appContext = new AnnotationConfigApplicationContext(BeanConfig.class);
         RunnerClass runner = appContext.getBean(RunnerClass.class);
         runner.run();

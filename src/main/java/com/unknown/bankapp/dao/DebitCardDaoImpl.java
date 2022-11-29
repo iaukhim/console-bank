@@ -2,7 +2,7 @@ package com.unknown.bankapp.dao;
 
 import com.unknown.bankapp.entities.DebitCard;
 import com.unknown.bankapp.exceptions.internal.DaoLayerException;
-import com.unknown.bankapp.exceptions.internal.user.NoSuchCardException;
+import com.unknown.bankapp.exceptions.user.NoSuchCardException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,19 +24,19 @@ import java.util.List;
 @Repository
 public class DebitCardDaoImpl implements DebitCardDao {
 
-    private final String pathToFile = "src/main/resources/db/DebitCards.csv";
+    private final String PATH_TO_FILE = "src/main/resources/db/DebitCards.csv";
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Override
     public void changeBalance(DebitCard debitCard, Long newBalance) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(pathToFile), StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(Paths.get(PATH_TO_FILE), StandardCharsets.UTF_8);
             String cardStringFormat = lines.get(debitCard.getId().intValue() - 1);
             List<String> parsedCardInfo = new ArrayList<>(Arrays.stream(cardStringFormat.split(" ")).toList());
             parsedCardInfo.set(4, newBalance.toString());
             String correctedCardInfo = String.join("\s", parsedCardInfo);
             lines.set(debitCard.getId().intValue() - 1, correctedCardInfo);
-            Files.writeString(Paths.get(pathToFile), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+            Files.writeString(Paths.get(PATH_TO_FILE), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
             throw new DaoLayerException(e);
@@ -49,7 +49,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
         debitCard.setBlocked(true);
         debitCard.setDateOfBlock(LocalDateTime.now());
         try {
-            List<String> lines = Files.readAllLines(Paths.get(pathToFile), StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(Paths.get(PATH_TO_FILE), StandardCharsets.UTF_8);
             String cardStringFormat = lines.get(debitCard.getId().intValue() - 1);
             List<String> parsedCardInfo = new ArrayList<>(Arrays.stream(cardStringFormat.split(" ")).toList());
             parsedCardInfo.set(8, status.toString());
@@ -57,7 +57,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
             String correctedCardInfo = String.join("\s", parsedCardInfo);
             lines.set(debitCard.getId().intValue() - 1, correctedCardInfo);
-            Files.writeString(Paths.get(pathToFile), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+            Files.writeString(Paths.get(PATH_TO_FILE), String.join("\n", lines), StandardCharsets.UTF_8, StandardOpenOption.WRITE);
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
             throw new DaoLayerException(e);
@@ -66,7 +66,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
     public List<DebitCard> loadAll() {
         List<DebitCard> cards = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(pathToFile);
+        try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {
@@ -82,7 +82,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
     @Override
     public DebitCard loadByCardNumber(String cardNumber) {
-        try (FileReader fileReader = new FileReader(pathToFile);
+        try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {

@@ -1,4 +1,4 @@
-package com.unknown.bankapp.exceptions.internal.user;
+package com.unknown.bankapp.exceptions.user;
 
 public class NotEnoughMoneyException extends CausedByUser {
 

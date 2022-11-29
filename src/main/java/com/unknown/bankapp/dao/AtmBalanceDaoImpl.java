@@ -19,13 +19,13 @@ import java.util.List;
 @Repository
 public class AtmBalanceDaoImpl implements AtmBalanceDao {
 
-    private final String pathToFile = "src/main/resources/db/atmBalance.csv";
+    private final String PATH_TO_FILE = "src/main/resources/db/atmBalance.csv";
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Override
     public void changeBalance(Long newBalance) {
-        try (FileReader fileReader = new FileReader(pathToFile);
+        try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {
@@ -36,7 +36,7 @@ public class AtmBalanceDaoImpl implements AtmBalanceDao {
                     stringBuffer.append(n);
                     stringBuffer.append(" ");
                 });
-                Files.writeString(Paths.get(pathToFile), stringBuffer.toString());
+                Files.writeString(Paths.get(PATH_TO_FILE), stringBuffer.toString());
             }
         } catch (IOException e) {
             logger.log(Level.FATAL, e.getMessage());
@@ -47,7 +47,7 @@ public class AtmBalanceDaoImpl implements AtmBalanceDao {
     @Override
     public Currency loadCurrency() {
         String currencyCode = null;
-        try (FileReader fileReader = new FileReader(pathToFile);
+        try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {
@@ -64,7 +64,7 @@ public class AtmBalanceDaoImpl implements AtmBalanceDao {
     @Override
     public Long loadBalance() {
         Long atmBalance = 0L;
-        try (FileReader fileReader = new FileReader(pathToFile);
+        try (FileReader fileReader = new FileReader(PATH_TO_FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             while (bufferedReader.ready()) {
